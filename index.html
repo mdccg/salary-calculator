@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="./styles.css" />
+  <title>Calculadora salarial</title>
+</head>
+<body>
+  <form id="formulario">
+    <label id="horas">Horas trabalhadas por semana</label>
+    <input type="number" name="horas" required />
+
+    <label id="salario">Valor do salário mínimo</label>
+    <input type="number" name="salario" value="1320" required />
+    
+    <input type="submit" value="Calcular" />
+  </form>
+
+  <span id="resultado" style="display: none;">
+    Trabalhando por <span id="quantidade-horas-trabalhadas"></span> horas semanais,
+    um trabalhador que recebe um salário mínimo por mês (<span id="valor-salario-minimo"></span>)
+    ganha aproximadamente <span id="valor-ganho-por-hora"></span> por hora trabalhada
+    e <span id="valor-ganho-por-hora-extra"></span> por hora extra trabalhada. Além disso,
+    esse trabalhador trabalhou por <span id="horas-mensais"></span> horas ao mês.
+  </span>
+
+  <script src="./src/calculaValorPorHora.js"></script>
+  <script>
+    const form = document.getElementById('formulario');
+    const resultadoHTML = document.getElementById('resultado');
+    const horasTrabalhadasHTML = document.getElementById('quantidade-horas-trabalhadas');
+    const valorSalarioMinimoHTML = document.getElementById('valor-salario-minimo');
+    const valorGanhoPorHoraHTML = document.getElementById('valor-ganho-por-hora');
+    const valorGanhoPorHoraExtraHTML = document.getElementById('valor-ganho-por-hora-extra');
+    const horasMensaisHTML = document.getElementById('horas-mensais');
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+
+      const horasTrabalhadas = Number(event.target.horas.value);
+      const valorSalarioMinimo = Number(event.target.salario.value);
+
+      if (!horasTrabalhadas || horasTrabalhadas < 0 || !valorSalarioMinimo || valorSalarioMinimo < 0) {
+        alert('A entrada está inválida.');
+        return;
+      }
+
+      const [valorGanhoPorHora, valorGanhoPorHoraExtra] = calculaValorPorHora(horasTrabalhadas, valorSalarioMinimo);
+    
+      const numberFormat = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
+      const formatador = numberFormat.format;
+
+      resultadoHTML.style.display = 'block';
+      horasTrabalhadasHTML.innerText = horasTrabalhadas;
+      valorSalarioMinimoHTML.innerText = formatador(valorSalarioMinimo);
+      valorGanhoPorHoraHTML.innerText = formatador(valorGanhoPorHora);
+      valorGanhoPorHoraExtraHTML.innerText = formatador(valorGanhoPorHoraExtra);
+      horasMensaisHTML.innerText = horasTrabalhadas * 5;
+    });
+  </script>
+</body>
+</html>

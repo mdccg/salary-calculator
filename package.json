@@ -1,0 +1,12 @@
+{
+  "name": "pre-prova",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "test": "jasmine --config=jasmine.json"
+  },
+  "dependencies": {
+    "jasmine": "^4.6.0"
+  }
+}
