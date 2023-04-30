@@ -1,9 +1,10 @@
 {
-  "name": "pre-prova",
+  "name": "salary-calculator",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
+    "start": "npx http-server",
     "test": "jasmine --config=jasmine.json"
   },
   "dependencies": {
